@@ -1,3 +1,4 @@
+
 AI Course & Career Advisor Chatbot
 
 This project is an AI chatbot that helps students choose the right IT course.
@@ -72,3 +73,7 @@ Thiruvananthapuram, Kerala, India
 Date
 
 January 2026
+
+https://github.com/user-attachments/assets/4579b7ec-17c4-4b95-9d87-c072846505b9
+
+
