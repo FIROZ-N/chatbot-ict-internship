@@ -1,0 +1,206 @@
+version: "3.1"
+
+intents:
+  # Existing intents
+  - greet
+  - ask_course_details
+  - view_courses
+  - ask_fees
+  - ask_duration
+  - ask_contact
+  - thank
+  - goodbye
+  - bot_challenge
+  - request_career_info
+  # Course advisor intents (TIME COMMITMENT REMOVED)
+  - start_course_advisor
+  - inform_goal
+  - inform_experience
+  - inform_interest
+  - inform_career_role
+  - request_more_info
+  - affirm
+  - deny
+  
+  # Additional intents
+  - compare_courses
+  - ask_placement
+  - ask_eligibility
+  - ask_scholarships
+
+entities:
+  - course_name
+  - goal
+  - experience
+  - interest_area
+  - career_role
+
+slots:
+  course_name:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: course_name
+  
+  user_goal:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: goal
+  
+  user_experience:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: experience
+  
+  user_interest:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: interest_area
+  
+  user_career_role:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: career_role
+  
+  recommended_course:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+
+responses:
+  utter_greet:
+  - text: "👋 Hi! I'm ICT Sahayi, your course & career advisor. How can I help you today?"
+    buttons:
+    - title: "📚 View All Courses"
+      payload: '/view_courses'
+    - title: "🧭 Find Right Course"
+      payload: '/start_course_advisor'
+    - title: "📞 Contact Info"
+      payload: '/ask_contact'
+
+  utter_ask_contact:
+  - text: "📞 <b>Contact ICT Academy of Kerala (ICTAK)</b><br><br>📧 Email: info@ictak.in<br>🌐 Website: www.ictak.in<br>📍 Location: Thiruvananthapuram, Kerala, India<br><br>💡 For course admissions and queries, our team is ready to help!"
+
+  utter_thank:
+  - text: "You're welcome! 😊 Is there anything else I can help you with?"
+    buttons:
+    - title: "🧭 Find Right Course"
+      payload: '/start_course_advisor'
+    - title: "📚 View All Courses"
+      payload: '/view_courses'
+
+  utter_goodbye:
+  - text: "Goodbye! 👋 Feel free to come back anytime you need help choosing a course!"
+
+  utter_iamabot:
+  - text: "I'm ICT Sahayi, a bot designed to help you find the perfect course! 🤖"
+
+  utter_start_advisor:
+  - text: "Great! Let me help you find the perfect course. I'll ask you just 4 quick questions to understand your goals. 🎯"
+
+  utter_ask_goal:
+  - text: "First, what brings you here today?"
+    buttons:
+    - title: "Change my career"
+      payload: '/inform_goal{{"goal":"career change"}}'
+    - title: "Upgrade my skills"
+      payload: '/inform_goal{{"goal":"skill upgrade"}}'
+    - title: "Exploring interests"
+      payload: '/inform_goal{{"goal":"personal interest"}}'
+    - title: "Get promoted"
+      payload: '/inform_goal{{"goal":"career advancement"}}'
+
+  utter_ask_experience:
+  - text: "Got it! Now, what's your technical experience level?"
+    buttons:
+    - title: "Complete beginner"
+      payload: '/inform_experience{{"experience":"beginner"}}'
+    - title: "Some basics"
+      payload: '/inform_experience{{"experience":"basic"}}'
+    - title: "Intermediate"
+      payload: '/inform_experience{{"experience":"intermediate"}}'
+    - title: "Advanced"
+      payload: '/inform_experience{{"experience":"advanced"}}'
+
+  utter_ask_interest:
+  - text: "Perfect! Which area interests you most?"
+    buttons:
+    - title: "🤖 AI & Machine Learning"
+      payload: '/inform_interest{{"interest_area":"ai ml"}}'
+    - title: "📊 Data Science & Analytics"
+      payload: '/inform_interest{{"interest_area":"data science"}}'
+    - title: "💻 Full Stack Development (MERN)"
+      payload: '/inform_interest{{"interest_area":"full stack"}}'
+    - title: "🔒 Cyber Security"
+      payload: '/inform_interest{{"interest_area":"cybersecurity"}}'
+    - title: "🧪 Testing & Quality (SDET)"
+      payload: '/inform_interest{{"interest_area":"testing"}}'
+    - title: "❓ Not sure yet"
+      payload: '/inform_interest{{"interest_area":"unsure"}}'
+
+  utter_ask_career_role:
+  - text: "Almost there! What career role are you aiming for?"
+    buttons:
+    - title: "🤖 ML/AI Engineer"
+      payload: '/inform_career_role{{"career_role":"ml engineer"}}'
+    - title: "📊 Data Scientist"
+      payload: '/inform_career_role{{"career_role":"data scientist"}}'
+    - title: "📈 Data Analyst"
+      payload: '/inform_career_role{{"career_role":"data analyst"}}'
+    - title: "💻 Full Stack Developer"
+      payload: '/inform_career_role{{"career_role":"full stack developer"}}'
+    - title: "🔒 Security Analyst"
+      payload: '/inform_career_role{{"career_role":"security analyst"}}'
+    - title: "🧪 SDET/QA Engineer"
+      payload: '/inform_career_role{{"career_role":"sdet"}}'
+    - title: "❓ Not sure"
+      payload: '/inform_career_role{{"career_role":"unsure"}}'
+
+  utter_processing_recommendation:
+  - text: "Thanks! Let me analyze your profile and find the best course for you... 🔍"
+
+  utter_placement_info:
+  - text: "💼 <b>Placement Support at ICTAK</b><br><br>✅ <b>100% Placement Assistance</b> for eligible candidates<br>• Resume building and optimization<br>• Mock interviews and feedback<br>• Industry connects and job referrals<br>• Career guidance sessions<br><br>📊 Our students have been placed in leading companies across India!"
+    buttons:
+    - title: "🧭 Find My Course"
+      payload: '/start_course_advisor'
+    - title: "📚 View Courses"
+      payload: '/view_courses'
+
+  utter_eligibility_info:
+  - text: "📋 <b>Eligibility Criteria</b><br><br>✅ Engineering or science graduates, or those with a three-year diploma in any engineering branch<br>✅ Foundational knowledge in Mathematics and Computer Fundamentals (equivalent to +2)<br>✅ Students awaiting final results may also apply<br><br>💡 Each course may have specific requirements. Let me help you find the right one!"
+    buttons:
+    - title: "🧭 Check Course Match"
+      payload: '/start_course_advisor'
+    - title: "📞 Contact for Details"
+      payload: '/ask_contact'
+
+  utter_scholarship_info:
+  - text: "🎓 <b>Scholarships & Benefits</b><br><br>✨ <b>Scholarships and Cash-backs</b> for meritorious candidates<br>✨ <b>3-6 month LinkedIn Learning access</b> included<br>✨ <b>Employability skills training</b> included<br>✨ <b>Expert sessions</b> by Industry Professionals<br><br>📞 Contact us for specific scholarship criteria and application process!"
+    buttons:
+    - title: "📞 Contact ICTAK"
+      payload: '/ask_contact'
+    - title: "🧭 Find My Course"
+      payload: '/start_course_advisor'
+
+actions:
+  - action_view_courses
+  - action_course_info
+  - action_recommend_course
+  - action_show_detailed_recommendation
+  - action_show_career_info
+  - action_compare_courses
+  
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
