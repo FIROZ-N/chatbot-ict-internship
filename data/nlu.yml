@@ -1,0 +1,264 @@
+version: "3.1"
+
+nlu:
+# ===== EXISTING INTENTS =====
+- intent: greet
+  examples: |
+    - hi
+    - hello
+    - hey
+    - good morning
+    - good evening
+
+- intent: ask_course_details
+  examples: |
+    - Tell me about [Data Science](course_name)
+    - What is [AI](course_name) course about?
+    - Explain [Cloud Computing](course_name)
+    - What is covered in [RPA](course_name)?
+    - Give me details about [Full Stack Development](course_name)
+    - data science
+    - tell me about data science
+    - data science course
+    - artificial intelligence
+    - ai course
+    - cloud computing
+    - rpa
+    - full stack development
+    
+- intent: view_courses
+  examples: |
+    - view courses
+    - show courses
+    - list courses
+    - what courses do you offer
+    - available courses
+  
+- intent: ask_fees
+  examples: |
+    - What is the fee for [Data Science](course_name)?
+    - How much does [AI](course_name) course cost?
+    - Fees for [Cloud Computing](course_name)
+    - What are the charges for [RPA](course_name)?
+
+- intent: ask_duration
+  examples: |
+    - How long is [Data Science](course_name) course?
+    - Duration of [AI](course_name) program
+    - How many months does [Cloud Computing](course_name) take?
+
+- intent: ask_contact
+  examples: |
+    - How can I contact ICTAK?
+    - What's ICTAK email?
+    - Where is ICTAK located?
+    - Give me ICTAK contact details
+
+- intent: thank
+  examples: |
+    - thank you
+    - thanks
+    - appreciate it
+    - that was helpful
+
+- intent: goodbye
+  examples: |
+    - bye
+    - see you later
+    - goodbye
+
+# ===== FIXED: ADD bot_challenge =====
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+
+# ===== COURSE ADVISOR INTENTS =====
+
+- intent: start_course_advisor
+  examples: |
+    - help me choose a course
+    - help me choose
+    - which course should I take
+    - which course should I choose
+    - recommend me a course
+    - recommend a course
+    - I need course recommendation
+    - I need a recommendation
+    - find the right course for me
+    - find the right course
+    - course advisor
+    - guide me
+    - I'm confused about which course
+    - I'm confused which course to take
+    - suggest a course
+    - suggest me a course
+    - what course is best for me
+    - which course is best for me
+    - I don't know which course to pick
+    - I need help choosing a course
+    - I want to find the perfect course
+    - recommend the best course
+
+- intent: inform_goal
+  examples: |
+    - I want to [change my career](goal)
+    - [career change](goal)
+    - looking to [switch careers](goal)
+    - I want to [upgrade my skills](goal)
+    - [skill enhancement](goal)
+    - want to [learn new skills](goal)
+    - I'm [exploring new interests](goal)
+    - just [curious about tech](goal)
+    - [personal interest](goal)
+    - want to [get promoted](goal)
+    - looking for [promotion](goal)
+    - [advance in my career](goal)
+
+- intent: inform_experience
+  examples: |
+    - I'm a [complete beginner](experience)
+    - [no experience](experience)
+    - I've [never coded before](experience)
+    - I have [some basic knowledge](experience)
+    - I've done [a few tutorials](experience)
+    - [beginner level](experience)
+    - I'm at [intermediate level](experience)
+    - I've [built small projects](experience)
+    - [intermediate experience](experience)
+    - I'm [quite experienced](experience)
+    - [advanced level](experience)
+    - I [work with tech regularly](experience)
+
+- intent: inform_interest
+  examples: |
+    - I like [artificial intelligence](interest_area)
+    - interested in [machine learning](interest_area)
+    - [AI and ML](interest_area) excites me
+    - I want to work with [deep learning](interest_area)
+    - [neural networks](interest_area) interest me
+    - building [intelligent systems](interest_area)
+    - I like [data science](interest_area)
+    - interested in [data analytics](interest_area)
+    - [working with data](interest_area)
+    - [data analysis and visualization](interest_area)
+    - [extracting insights from data](interest_area)
+    - I like [full stack development](interest_area)
+    - interested in [MERN stack](interest_area)
+    - [web development](interest_area)
+    - building [web applications](interest_area)
+    - [React and Node.js](interest_area)
+    - interested in [cybersecurity](interest_area)
+    - [ethical hacking](interest_area)
+    - [network security](interest_area)
+    - [penetration testing](interest_area)
+    - interested in [software testing](interest_area)
+    - [test automation](interest_area)
+    - [quality assurance](interest_area)
+    - [SDET role](interest_area)
+    - [I'm not sure](interest_area)
+    - [don't know yet](interest_area)
+
+- intent: inform_career_role
+  examples: |
+    - I want to be a [machine learning engineer](career_role)
+    - [AI engineer](career_role)
+    - [ML engineer](career_role)
+    - I want to be a [data scientist](career_role)
+    - [data analyst](career_role)
+    - [business analyst](career_role)
+    - I want to be a [full stack developer](career_role)
+    - [MERN stack developer](career_role)
+    - [web developer](career_role)
+    - I want to be a [cybersecurity analyst](career_role)
+    - [security analyst](career_role)
+    - [penetration tester](career_role)
+    - I want to be a [SDET](career_role)
+    - [test automation engineer](career_role)
+    - [QA automation engineer](career_role)
+    - [not sure about the role](career_role)
+    - [show me role options](career_role)
+
+- intent: request_more_info
+  examples: |
+    - tell me more
+    - I want more details
+    - what else can you tell me
+    - give me more information
+    - elaborate
+
+- intent: affirm
+  examples: |
+    - yes
+    - yeah
+    - yep
+    - sure
+    - of course
+    - sounds good
+    - correct
+    - that's right
+
+# ===== FIXED: ADD deny examples =====
+- intent: deny
+  examples: |
+    - no
+    - nope
+    - not really
+    - don't think so
+    - no thanks
+    - not interested
+
+# ===== NEW INTENTS (now properly defined) =====
+
+- intent: compare_courses
+  examples: |
+    - compare data science and AI ML
+    - what's the difference between full stack and SDET
+    - AI vs data science
+    - should I choose cybersecurity or data science
+    - compare all courses
+    - which is better for me
+    - compare courses
+
+- intent: ask_placement
+  examples: |
+    - do you provide placement
+    - what about job placement
+    - placement assistance
+    - will you help me get a job
+    - job guarantee
+    - placement support
+    - do you help with jobs
+
+- intent: ask_eligibility
+  examples: |
+    - am I eligible
+    - what are the eligibility criteria
+    - who can join
+    - do I need experience
+    - eligibility requirements
+    - can I join without a tech background
+    - what are the requirements
+
+- intent: ask_scholarships
+  examples: |
+    - are there scholarships
+    - scholarship options
+    - financial aid
+    - do you offer scholarships
+    - cashback offers
+    - discounts available
+    - any scholarships
+    
+- intent: request_career_info
+  examples: |
+    - career and salary info
+    - show me career paths
+    - what are the job opportunities
+    - salary information
+    - tell me about career options
+    - what jobs can I get
+    - career prospects
+    - salary ranges

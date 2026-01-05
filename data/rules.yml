@@ -1,0 +1,63 @@
+version: "3.1"
+
+rules:
+- rule: Respond to greeting
+  steps:
+    - intent: greet
+    - action: utter_greet
+
+- rule: Respond to bot challenge
+  steps:
+    - intent: bot_challenge
+    - action: utter_iamabot
+
+- rule: Course details
+  steps:
+    - intent: ask_course_details
+    - action: action_course_info
+
+- rule: Start course advisor
+  steps:
+    - intent: start_course_advisor
+    - action: utter_start_advisor
+    - action: utter_ask_goal
+
+- rule: Say goodbye
+  steps:
+    - intent: goodbye
+    - action: utter_goodbye
+
+- rule: Say thanks
+  steps:
+    - intent: thank
+    - action: utter_thank
+
+- rule: Show contact info
+  steps:
+    - intent: ask_contact
+    - action: utter_ask_contact
+
+- rule: View all courses
+  steps:
+    - intent: view_courses
+    - action: action_view_courses
+
+- rule: Placement information
+  steps:
+    - intent: ask_placement
+    - action: utter_placement_info
+
+- rule: Eligibility information
+  steps:
+    - intent: ask_eligibility
+    - action: utter_eligibility_info
+
+- rule: Scholarship information
+  steps:
+    - intent: ask_scholarships
+    - action: utter_scholarship_info
+    
+- rule: Show career and salary information
+  steps:
+    - intent: request_career_info
+    - action: action_show_career_info    

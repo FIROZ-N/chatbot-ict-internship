@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICT Sahayi – Course & Career Advisor</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+    }
+
+    .chat-container {
+      width: 380px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .chat-header {
+      background: #b7d9f2;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      position: relative;
+    }
+
+    .header-logo {
+      width: 36px;
+      height: 36px;
+    }
+
+    .header-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f3fa3;
+    }
+
+    /* Chat area */
+    .chat-box {
+      padding: 14px;
+      height: 420px;
+      overflow-y: auto;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Bot messages */
+    .bot-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .bot-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .bot-message-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 75%;
+    }
+
+    .bot-message {
+      background: #f3f6f9;
+      color: #1f2937;
+      padding: 10px 14px;
+      border-radius: 10px;
+      line-height: 1.4;
+    }
+
+    /* Button styles */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .response-button {
+      background: #ffffff;
+      border: 2px solid #1f3fa3;
+      color: #1f3fa3;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 14px;
+      transition: all 0.2s;
+      font-family: Arial, sans-serif;
+    }
+
+    .response-button:hover {
+      background: #1f3fa3;
+      color: #ffffff;
+      transform: translateX(2px);
+    }
+
+    .response-button:active {
+      transform: scale(0.98);
+    }
+
+    /* User messages */
+    .user-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+
+    .user-message {
+      background: #ff7a59;
+      color: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      max-width: 70%;
+      text-align: right;
+    }
+
+    /* Input */
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+
+    .chat-input button {
+      padding: 10px 16px;
+      border: none;
+      background: #1f3fa3;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .chat-input button:hover {
+      background: #152d7a;
+    }
+
+    /* Scrollbar styling */
+    .chat-box::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-box::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    .chat-box::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 3px;
+    }
+
+    .chat-box::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="chat-container">
+  <div class="chat-header">
+    <img src="{{ url_for('static', filename='logo.png') }}" class="header-logo" />
+    <div class="header-title">ICT Sahayi</div>
+  </div>
+
+  <div class="chat-box" id="chat-box">
+    <!-- Greeting message shown immediately -->
+    <div class="bot-row">
+      <img src="{{ url_for('static', filename='logo.png') }}" class="bot-avatar">
+      <div class="bot-message">
+        👋 Hi! I'm ICT Sahayi, your course & career advisor.<br>
+        How can I help you today?
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-input">
+    <input
+      id="user-input"
+      placeholder="Type your message..."
+      onkeypress="handleKey(event)"
+    />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+  async function sendMessage(messageText = null) {
+    const input = document.getElementById("user-input");
+    const chatBox = document.getElementById("chat-box");
+
+    // Use provided message or get from input
+    const message = messageText || input.value.trim();
+    if (!message) return;
+
+    // Show user message
+    chatBox.innerHTML += `
+      <div class="user-row">
+        <div class="user-message">${escapeHtml(message)}</div>
+      </div>
+    `;
+
+    input.value = "";
+    scrollToBottom();
+
+    try {
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await res.json();
+
+      // Handle array of responses (Rasa can return multiple messages)
+      if (Array.isArray(data)) {
+        data.forEach(response => {
+          displayBotMessage(response);
+        });
+      } else {
+        // Handle single response with 'reply' field
+        displayBotMessage({ text: data.reply || data.text });
+      }
+
+    } catch (error) {
+      console.error("Error:", error);
+      chatBox.innerHTML += `
+        <div class="bot-row">
+          <img src="{{ url_for('static', filename='logo.png') }}" class="bot-avatar">
+          <div class="bot-message">
+            ⚠️ Sorry, I encountered an error. Please try again.
+          </div>
+        </div>
+      `;
+    }
+
+    scrollToBottom();
+  }
+
+  function displayBotMessage(response) {
+    const chatBox = document.getElementById("chat-box");
+    
+    // Create message container
+    const botRow = document.createElement('div');
+    botRow.className = 'bot-row';
+    
+    // Add avatar
+    botRow.innerHTML = `
+      <img src="{{ url_for('static', filename='logo.png') }}" class="bot-avatar">
+      <div class="bot-message-container">
+        <div class="bot-message">${response.text || response.reply || ''}</div>
+      </div>
+    `;
+    
+    chatBox.appendChild(botRow);
+    
+    // Add buttons if they exist
+    if (response.buttons && response.buttons.length > 0) {
+      const messageContainer = botRow.querySelector('.bot-message-container');
+      const buttonGroup = document.createElement('div');
+      buttonGroup.className = 'button-group';
+      
+      response.buttons.forEach(button => {
+        const btn = document.createElement('button');
+        btn.className = 'response-button';
+        btn.textContent = button.title;
+        btn.onclick = () => handleButtonClick(button);
+        buttonGroup.appendChild(btn);
+      });
+      
+      messageContainer.appendChild(buttonGroup);
+    }
+    
+    scrollToBottom();
+  }
+
+  function handleButtonClick(button) {
+    // Extract the message from payload
+    let message = button.payload;
+    
+    // If payload starts with /, it's an intent - send as is
+    // Otherwise, extract the entity value if it's in JSON format
+    if (message.startsWith('/')) {
+      // Handle intent format: /intent_name or /intent_name{"entity":"value"}
+      if (message.includes('{')) {
+        // Extract just the text to display to user
+        const intentMatch = message.match(/\/([^{]+)/);
+        const intentName = intentMatch ? intentMatch[1].replace(/_/g, ' ') : message;
+        
+        // For display, use the button title
+        showUserMessage(button.title);
+        
+        // Send the full payload to Rasa
+        sendMessageToRasa(message);
+      } else {
+        // Simple intent like /greet
+        showUserMessage(button.title);
+        sendMessageToRasa(message);
+      }
+    } else {
+      // Regular text message
+      sendMessage(message);
+    }
+  }
+
+  function showUserMessage(text) {
+    const chatBox = document.getElementById("chat-box");
+    chatBox.innerHTML += `
+      <div class="user-row">
+        <div class="user-message">${escapeHtml(text)}</div>
+      </div>
+    `;
+    scrollToBottom();
+  }
+
+  async function sendMessageToRasa(payload) {
+    const chatBox = document.getElementById("chat-box");
+    
+    try {
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: payload })
+      });
+
+      const data = await res.json();
+
+      // Handle response
+      if (Array.isArray(data)) {
+        data.forEach(response => {
+          displayBotMessage(response);
+        });
+      } else {
+        displayBotMessage({ text: data.reply || data.text });
+      }
+
+    } catch (error) {
+      console.error("Error:", error);
+      chatBox.innerHTML += `
+        <div class="bot-row">
+          <img src="{{ url_for('static', filename='logo.png') }}" class="bot-avatar">
+          <div class="bot-message">
+            ⚠️ Sorry, I encountered an error. Please try again.
+          </div>
+        </div>
+      `;
+    }
+    
+    scrollToBottom();
+  }
+
+  function scrollToBottom() {
+    const chatBox = document.getElementById("chat-box");
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function handleKey(e) {
+    if (e.key === "Enter") sendMessage();
+  }
+</script>
+
+</body>
+</html>
+

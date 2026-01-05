@@ -1,0 +1,77 @@
+version: "3.1"
+
+stories:
+# ===== EXISTING STORIES =====
+- story: greet and ask course details
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_course_details
+  - action: action_course_info
+
+- story: view courses
+  steps:
+    - intent: view_courses
+    - action: action_view_courses
+
+- story: ask fees
+  steps:
+  - intent: ask_fees
+  - action: action_course_info
+
+- story: ask duration
+  steps:
+  - intent: ask_duration
+  - action: action_course_info
+
+- story: ask contact
+  steps:
+  - intent: ask_contact
+  - action: utter_ask_contact
+
+- story: user thanks
+  steps:
+  - intent: thank
+  - action: utter_thank
+
+- story: user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+# ===== COURSE ADVISOR STORIES (4 QUESTIONS - NO TIME) =====
+
+- story: course advisor happy path
+  steps:
+  - intent: start_course_advisor
+  - action: utter_start_advisor
+  - action: utter_ask_goal
+  - intent: inform_goal
+  - action: utter_ask_experience
+  - intent: inform_experience
+  - action: utter_ask_interest
+  - intent: inform_interest
+  - action: utter_ask_career_role
+  - intent: inform_career_role
+  - action: utter_processing_recommendation
+  - action: action_recommend_course
+
+- story: advisor from greeting
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: start_course_advisor
+  - action: utter_start_advisor
+  - action: utter_ask_goal
+
+- story: user wants more details
+  steps:
+  - action: action_recommend_course
+  - intent: request_more_info
+  - action: action_show_detailed_recommendation
+
+- story: user affirms recommendation
+  steps:
+  - action: action_recommend_course
+  - intent: affirm
+  - action: action_course_info
