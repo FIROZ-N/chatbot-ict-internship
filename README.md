@@ -1,79 +1,65 @@
-
-AI Course & Career Advisor Chatbot
+# AI Course & Career Advisor Chatbot
 
 This project is an AI chatbot that helps students choose the right IT course.
 
-It was submitted to ICT Academy of Kerala as part of the
-Certified Specialist in Data Science and Analytics program.
+It was submitted to **ICT Academy of Kerala** in partial fulfillment of the requirements for the  
+**Certified Specialist in Data Science and Analytics** certification.
 
-Project Name
+---
 
-ICT Sahayi – AI Course & Career Advisor Chatbot
+## Project Name
+**ICT Sahayi – AI Course & Career Advisor Chatbot**
 
-Purpose
+---
 
-Students often feel confused when choosing courses.
-This chatbot gives simple and clear course suggestions based on:
+## Purpose
+Students often feel confused when choosing courses.  
+This chatbot gives clear and simple course suggestions based on:
+- Career goal  
+- Experience level  
+- Area of interest  
+- Target job role  
 
-Career goal
+---
 
-Experience level
+## What It Does
+- Talks with users in simple language  
+- Answers course-related questions  
+- Suggests the best course for each user  
+- Works 24/7  
+- Reduces the need for manual counselling  
 
-Area of interest
+---
 
-Target job role
+## Technologies Used
+- Python  
+- Rasa (NLU and Dialog Management)  
+- Flask  
+- HTML, CSS, JavaScript  
+- CSV for course data  
 
-What It Does
+---
 
-Talks with users in simple language
+## Key Features
+- Personalized course recommendations  
+- Button-based guided responses  
+- Fast and accurate replies  
+- Easy course data updates  
 
-Answers course-related questions
+---
 
-Suggests the best course for the user
+## Submitted By
+- **SIBIN S S**  
+- **HARIKRISHNAN R T**  
+- **FIROZ MUHAMMED N**
 
-Works 24/7
+---
 
-Reduces manual counselling time
+## Institution
+**ICT Academy of Kerala**  
+Thiruvananthapuram, Kerala, India  
 
-Technologies Used
+---
 
-Python
-
-Rasa (NLU & Dialog Management)
-
-Flask
-
-HTML, CSS, JavaScript
-
-CSV for course data
-
-Key Features
-
-Personalized course recommendation
-
-Button-based guided answers
-
-Fast and accurate responses
-
-Easy to update course data
-
-Submitted By
-
-SIBIN S S
-
-HARIKRISHNAN R T
-
-FIROZ MUHAMMED N
-
-Institution
-
-ICT Academy of Kerala
-Thiruvananthapuram, Kerala, India
-
-Date
-
-January 2026
-
-https://github.com/user-attachments/assets/4579b7ec-17c4-4b95-9d87-c072846505b9
-
-
+## Date
+**January 2026
